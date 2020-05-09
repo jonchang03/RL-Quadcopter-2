@@ -78,11 +78,11 @@ class TakeoffTask():
         # reward = 1.-.3*(abs(self.sim.pose[:3] - self.target_pos)).sum()
         reward_z_velocity = np.tanh(self.sim.v[2])
         reward_pose = np.tanh(1 - 0.0005*(abs(self.sim.pose[:3] - self.target_pos)).sum())
-        #reward_pose= np.tanh(1- 0.03*(abs(self.sim.pose[:2] - self.target_pos[:2])).sum())
-        reward_x = 1.-0.003*(abs(self.sim.pose[0] - self.target_pos[0])).sum()
-        reward_y = 1.-0.003*(abs(self.sim.pose[1] - self.target_pos[1])).sum()
-        reward_z = 1.-0.003*(abs(self.sim.pose[2] - self.target_pos[2])).sum()
-        reward=0.75*reward_z_velocity + 0.25*reward_pose #- 0.25*reward_x -0.25*reward_y
+        reward=0.75*reward_z_velocity + 0.25*reward_pose 
+        
+        # penalty term
+        # penalty = np.tanh(abs(abs(self.sim.pose[:3] - self.target_pos).sum() - abs(self.sim.v).sum()))
+        # reward -= 0.5*penalty
 
         return reward
     
